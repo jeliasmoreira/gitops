@@ -1,3 +1,4 @@
+TF_FOLDER="./tf-module"
 ARGO_INSTALL_LINK="https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml	"
 ARGO_CLI_LINK="https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64"
 
@@ -16,6 +17,6 @@ proxy:
 	@ echo "Acesse http://localhost:8181 com usuario admin e senha password"
 
 deploy_eks:
-	@ cd ../tf-module/eks && terraform init && terraform validate && terraform plan
+	@ cd $(TF_FOLDER)/eks/ && terraform init && terraform validate && terraform apply -auto-approve
 	@ aws eks --region us-east-1 update-kubeconfig --name gitops-lab
 	@ kubectl get nodes -o wides
