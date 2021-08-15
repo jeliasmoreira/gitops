@@ -1,0 +1,4 @@
+tf-module/*/.terraform/
+tf-module/*/*.tfstate*
+tf-module/*/*.local.hcl*
+argocd-deploy/get_helm.sh
