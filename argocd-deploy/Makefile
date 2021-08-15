@@ -17,3 +17,5 @@ proxy:
 
 deploy_eks:
 	@ cd ../tf-module/eks && terraform init && terraform validate && terraform plan
+	@ aws eks --region us-east-1 update-kubeconfig --name gitops-lab
+	@ kubectl get nodes -o wides

@@ -1,3 +1,0 @@
-.terraform/*.*
-*.tfstate*
-*.local.hcl*
