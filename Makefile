@@ -64,4 +64,4 @@ undeploy_helm:
 	@ helm delete $(ARGO_HELM_RELEASE_NAME) -n $(ARGO_NAMESPACE)
 	@ echo "ArgoCD removido via helm delete"
 
-undeploy_all: undeploy_eks
+undeploy_all: undeploy_app_sample undeploy_eks
