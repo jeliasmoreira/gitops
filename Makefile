@@ -1,13 +1,41 @@
 include vars.make
 
 
-################## Install targets################
+default:
+	@ echo Leia o README.md
+
+################## Install targets ################
+
+show_aws_account:
+	@ echo Informacoes de autenticacao do AWS CLI
+	@ aws sts get-caller-identity
+
+################## Install targets ###############
 install_cli:
 	@ sudo curl -sSL -o /usr/local/bin/argocd $(ARGO_CLI_LINK)
 	@ sudo chmod +x /usr/local/bin/argocd
 	@ echo "ArgoCD CLI Instalado com sucesso"
 
-################## Deploy targets################
+install_terraform:
+	@ echo Baixando binário do terraform
+	@ sudo curl -sSL -o /tmp/terraform.zip $(TERRAFORM_BIN_LINK) || echo OK
+	@ echo Unzip
+	@ sudo unzip /tmp/terraform.zip || echo OK
+	@ echo Implantando terraforma na PATH local
+	@ sudo mv terraform /usr/local/bin/terraform
+
+install_infracost:
+	@ curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+	@ infracost register
+
+cost:
+	@ cd $(TF_FOLDER)/eks/ && terraform init && terraform plan -out tfplan.binary
+	@ cd $(TF_FOLDER)/eks/ && terraform show -json tfplan.binary > plan.json
+	@ cd $(TF_FOLDER)/eks/ && infracost breakdown --path plan.json
+	@ cd $(TF_FOLDER)/eks/ && infracost diff --path plan.json
+
+
+################## Deploy targets ################
 deploy_eks:
 	@ cd $(TF_FOLDER)/eks/ && terraform init && terraform validate && terraform apply -auto-approve
 	@ echo "Gerando o kubeconfig do cluster EKS GitOps" && sleep 10s
@@ -34,7 +62,7 @@ deploy_app_sample:
 	@ echo "Em alguns minutos, acesse via HTTP o endereço do AWS Load Balancer que foi criado"
 	@ kubectl -n $(APP_SAMPLE_NAMESPACE) get svc | awk '{print $$4}'|grep 'elb.amazonaws.com'
 
-################## Conf targets################
+################## Conf targets ################
 conf_pass:
 	@ echo "Setando senha do usuario admin (gitops)"
 	@ sleep 15
@@ -48,7 +76,7 @@ conf_argocd_context:
 	@ echo "Logando no servidor ArgoCD via Kube PortForward"
 	@ argocd login $(ARGOCD_LOGIN_SERVER) --username $(ARGOCD_USER) --insecure
 
-################## Undeploy targets################
+################## Undeploy targets ################
 undeploy_app_sample:
 	@ argocd app delete $(APP_NAME) -y	
 
