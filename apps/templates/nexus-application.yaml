@@ -6,10 +6,10 @@ metadata:
 spec:
   project: default
   source:
-    path: apps/nexus-repository-manager/
     repoURL:  https://github.com/jeliasmoreira/gitops.git
     helm:
       releaseName: nexus-registry
+      path: apps/nexus-repository-manager/
   destination:
     server: "https://kubernetes.default.svc"
     namespace: registry
