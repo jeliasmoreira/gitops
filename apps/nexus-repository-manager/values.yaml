@@ -118,7 +118,7 @@ service:
   enabled: true
   labels: {}
   annotations: {}
-  type: ClusterIP
+  type: NodePort
 
 
 route:
