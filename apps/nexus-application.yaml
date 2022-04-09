@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nexus-registry
+  namespace: argocd
+spec:
+  project: default
+  source:
+    path: apps/nexus-repository-manager/
+    repoURL:  https://github.com/jeliasmoreira/gitops.git
+    helm:
+      releaseName: nexus-registry
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: registry
