@@ -147,7 +147,7 @@ persistence:
   # existingClaim:
   # annotations:
   #  "helm.sh/resource-policy": keep
-  # storageClass: "-"
+  storageClass: "standard"
   storageSize: 8Gi
   # If PersistentDisk already exists you can create a PV for it by including the 2 following keypairs.
   # pdName: nexus-data-disk
