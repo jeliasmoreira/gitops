@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    path: apps/nexus-repository-manager/
+    path: apps/
     repoURL:  https://github.com/jeliasmoreira/gitops.git
     helm:
       releaseName: nexus-registry
