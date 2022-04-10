@@ -95,7 +95,7 @@ serviceAccount:
   create: true
   ## @param serviceAccount.name The name of the ServiceAccount to create
   ## If not set and create is true, a name is generated using the common.names.fullname template
-  name: "metric"
+  name: ""
   ## @param serviceAccount.automountServiceAccountToken Automount API credentials for a service account
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   ##
@@ -131,11 +131,11 @@ command: ["metrics-server"]
 ## @param extraArgs Extra arguments to pass to metrics-server on start up
 ## ref: https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md#flags
 ##
-extraArgs:
-     kubelet-insecure-tls: true
-     kubelet-preferred-address-types: InternalIP
+## extraArgs:
+##   kubelet-insecure-tls: true
+##   kubelet-preferred-address-types: InternalIP
 ##
-#extraArgs: {}
+extraArgs: {}
 ## @param podLabels Pod labels
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
