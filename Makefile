@@ -19,12 +19,12 @@ deploy_manifests:
 	@ kubectl create namespace argocd || true
 	@ kubectl apply -n $(ARGO_NAMESPACE) -f $(ARGO_INSTALL_LINK)
 
-deploy_helm:
-	@ kubectl create namespace $(ARGO_NAMESPACE) || true
-	@ echo "Instalando repositorio Helm para ArgoCD"	
-	@ helm repo add argo https://argoproj.github.io/argo-helm
-	@ echo "Instalando ArgoCD via helm"
-	@ helm install $(ARGO_HELM_RELEASE_NAME) argo/argo-cd -n $(ARGO_NAMESPACE)
+# deploy_helm:
+# 	@ kubectl create namespace $(ARGO_NAMESPACE) || true
+# 	@ echo "Instalando repositorio Helm para ArgoCD"	
+# 	@ helm repo add argo https://argoproj.github.io/argo-helm
+# 	@ echo "Instalando ArgoCD via helm"
+# 	@ helm install $(ARGO_HELM_RELEASE_NAME) argo/argo-cd -n $(ARGO_NAMESPACE)
 
 deploy_app_sample:
 	@ argocd repo add $(GIT_REPO) --insecure-ignore-host-key --ssh-private-key-path $(PRIVATE_KEY) --upsert
@@ -38,7 +38,7 @@ deploy_app_sample:
 conf_pass:
 	@ echo "Setando senha do usuario admin (gitops)"
 	@ sleep 15
-	@ sh bash -c $(ARGO_DEPLOY_FOLDER)/patch.sh $(ARGOCD_USER) $(ARGOCD_PASSWORD)
+	@ bash -c $(ARGO_DEPLOY_FOLDER)/patch.sh $(ARGOCD_USER) $(ARGOCD_PASSWORD)
 
 conf_proxy:
 	@ kubectl -n argocd port-forward svc/argocd-server 8080:80 &deploy_helm
