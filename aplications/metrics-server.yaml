@@ -1,16 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nexus-registry
+  name: metrics-server
   namespace: argocd
 spec:
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
   project: default
   source:
-    path: ./apps/nexus-repository-manager/
+    path: ./charts/metrics-server/
     repoURL:  https://github.com/jeliasmoreira/gitops.git
     helm:
-      releaseName: nexus-registry
+      releaseName: metrics-server
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: default
-    
+    namespace: monitoring
