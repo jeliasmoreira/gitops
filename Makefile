@@ -1,12 +1,11 @@
-<<<<<<< HEAD
 include vars.make
-
 
 ################## Install targets################
 install_cli:
 	@ sudo curl -sSL -o /usr/local/bin/argocd $(ARGO_CLI_LINK)
 	@ sudo chmod +x /usr/local/bin/argocd
 	@ echo "ArgoCD CLI Instalado com sucesso"
+
 
 ################## Deploy targets################
 deploy_eks:
@@ -39,15 +38,16 @@ deploy_app_sample:
 conf_pass:
 	@ echo "Setando senha do usuario admin (gitops)"
 	@ sleep 15
-	@ bash -c $(ARGO_DEPLOY_FOLDER)/patch.sh $(ARGOCD_USER) $(ARGOCD_PASSWORD)
+	@ sh bash -c $(ARGO_DEPLOY_FOLDER)/patch.sh $(ARGOCD_USER) $(ARGOCD_PASSWORD)
 
 conf_proxy:
-	@ kubectl -n argocd port-forward svc/argocd-server 8080:80 &
+	@ kubectl -n argocd port-forward svc/argocd-server 8080:80 &deploy_helm
 	@ echo "Acesse http://localhost:8080 com usuario $(ARGOCD_USER) e senha $(ARGOCD_PASSWORD)"
 
 conf_argocd_context:
 	@ echo "Logando no servidor ArgoCD via Kube PortForward"
 	@ argocd login $(ARGOCD_LOGIN_SERVER) --username $(ARGOCD_USER) --insecure
+
 
 ################## Undeploy targets################
 undeploy_app_sample:
