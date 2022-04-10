@@ -17,7 +17,9 @@ rules:
       - pods
       - nodes
       - namespaces
-      - configmaps
+      - nodes/stats
+      - namespaces
+      - configmaps      
     verbs:
       - get
       - list
@@ -26,6 +28,9 @@ rules:
       - ""
     resources:
       - nodes/metrics
+      - nodes/stats
+      - namespaces
+      - configmaps      
     verbs:
       - get
       - create
@@ -44,6 +49,9 @@ rules:
     resources:
       - pods
       - nodes
+      - nodes/stats
+      - namespaces
+      - configmaps      
     verbs:
       - get
       - list
