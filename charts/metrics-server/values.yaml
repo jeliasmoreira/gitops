@@ -109,7 +109,7 @@ apiService:
   create: false
   ## @param apiService.insecureSkipTLSVerify Specifies whether to skip self-verifying self-signed TLS certificates. Set to "false" if you are providing your own certificates.
   ## Note that "false" MUST be in quotation marks (cf. https://github.com/helm/helm/issues/3308), since false without quotation marks will render to true
-  insecureSkipTLSVerify: false
+  insecureSkipTLSVerify: true
   ## @param apiService.caBundle A base64-encoded string of concatenated certificates for the CA chain for the APIService.
   caBundle: ""
 ## @param securePort Port where metrics-server will be running
@@ -131,11 +131,11 @@ command: ["metrics-server"]
 ## @param extraArgs Extra arguments to pass to metrics-server on start up
 ## ref: https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md#flags
 ##
-## extraArgs:
-##   kubelet-insecure-tls: true
-##   kubelet-preferred-address-types: InternalIP
+extraArgs:
+     kubelet-insecure-tls: true
+     kubelet-preferred-address-types: InternalIP
 ##
-extraArgs: {}
+#extraArgs: {}
 ## @param podLabels Pod labels
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
