@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-server
+  namespace: argocd
+spec:
+  syncPolicy:
+    automated:
+      prune: true
+      allowEmpty: true
+  project: default
+  source:
+    path: ./charts/prometheus/
+    repoURL:  https://github.com/jeliasmoreira/gitops.git
+    helm:
+      releaseName: prometheus-server
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: monitoring
